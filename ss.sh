@@ -56,7 +56,7 @@ case $1 in
         if [ -f /home/$USER/.ssh/srvkey ];
           then
             echo "If you have a DNS Zone, script will use subdomains for your DNS Zone, for example dns.homenet2.pl, git.homenet2.pl"
-            echo "Do you have a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty"
+            echo "Do you want to use only a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty"
             read -p zone
             if [ -z "$zone"]; then #if zone is empty - no dns
               ###Create script
