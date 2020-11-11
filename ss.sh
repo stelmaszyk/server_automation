@@ -51,7 +51,7 @@ case $1 in
   "connect")
       /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$2
       exit 1;;
-  "*") echo "Unknown Option. USAGE:"
+  *) echo "Unknown Option. USAGE:"
         echo "ss <generate|push|connect>"
         echo "ss <connect> <host>"
         exit 1;;
