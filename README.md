@@ -4,23 +4,23 @@ SS - shortcut of SuperuserShell. This is a bash script I use for connecting to s
 
 Script must be run with parameters provided below, otherwise <b>IT WILL NOT WORK</b>
 
-<b>ss.sh generate </b>
+<b>ss.sh generate </b> <br>
 Running script with this parameter will generate SSH Keys to the defalt location: /home/$user/.ssh/
 <b> Please DO NOT change the default directory, otherwise all other functions WILL NOT work. </b>
 Also, the script allows user to push first public key to the first server. This is the first, and the last (if it will go fine) time, when you will be using password. 
 
-<b>ss.sh push </b>
+<b>ss.sh push </b><br>
 Running script with this parameter will push SSH key to desired server. 
 There is a pre-check if SSH Key is generated, or not. If not, you will be prompted, to run this script with "generate" parameter. 
 Connection check will be done once SSH Key is installed.
 <b>ToDo: bulk SSH Key Push for 1+ servers at once </b>
 
-<b> ss.sh connect <IP/FQDN> </b>
+<b> ss.sh connect <IP/FQDN> </b><br>
 Running with this parameter will allow you to connect to server. In this case, as the second parameter, IP Address or FQDN <b>MUST BE</b> given. 
 Example: <i> ss.sh connect 10.54.22.3 </i>
 If prompted for password - keys are not generated.
 
-<b>ss.sh install </b>
+<b>ss.sh install </b><br>
 This is a function to install connection script to /usr/bin as "ss". Thanks to it, from every place in the system, you will be able to execute connection script. 
 <b>INSTALLED SCRIPT IS ONLY FOR CONNECTING TO SERVERS!!! </b>
 There is also a pre-check if SSH Key is installed. 
