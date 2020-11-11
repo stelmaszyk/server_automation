@@ -51,6 +51,38 @@ case $1 in
   "connect")
       /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$2
       exit 1;;
+  "install")
+      echo "Checking if SSH Keys are installed. "
+        if [ -f /home/$USER/.ssh/srvkey ];
+          then
+            echo "If you have a DNS Zone, script will use subdomains for your DNS Zone, for example dns.homenet2.pl, git.homenet2.pl"
+            echo "Do you have a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty"
+            read -p zone
+            if [ -z "$zone"]; then #if zone is empty - no dns
+              ###Create script
+              echo "Enter IP Address of target Server"
+              read -p srvip
+              echo " #!/bin/bash
+              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$srvip" >> /home/$user/ss
+              echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
+              sudo mv /home/$user/ss /usr/bin
+              sudo chmod +x /usr/bin/ss
+              echo "Script installed."
+            else #if DNS Zone provided
+              echo "Enter FQDN without domain"
+              echo "Example: if your subdomain is cloud.homenet2.pl, enter cloud. "
+              read -p subfqdn
+              echo " #!/bin/bash
+              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$subfqdn" >> /home/$user/ss
+              echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
+              sudo mv /home/$user/ss /usr/bin
+              sudo chmod +x /usr/bin/ss
+              echo "Script installed."
+            fi
+          else echo "No Keys Found. To generate keys, please run this script with generate parameter. "
+          fi
+          exit 1;;
+
   *) echo "Unknown Option. USAGE:"
         echo "ss <generate|push|connect>"
         echo "ss <connect> <host>"
