@@ -73,7 +73,7 @@ case $1 in
               echo "Example: if your subdomain is cloud.homenet2.pl, enter cloud. "
               read -p subfqdn
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$subfqdn" >> /home/$user/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$subfqdn.$zone" >> /home/$user/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
               sudo mv /home/$user/ss /usr/bin
               sudo chmod +x /usr/bin/ss
