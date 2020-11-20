@@ -17,15 +17,14 @@ case $1 in
   "generate")
       echo "Generating SSH Keys. Please answer for few questions, DO NOT CHANGE the SSH Keys location"
       /usr/bin/ssh-keygen -t rsa
-      echo "Keys have been generated, do you want to push them to the first server? (y/n)"
-      read -p pushdecision
+      read -p "Keys have been generated, do you want to push them to the first server? (y/n)" pushdecision
       case $pushdecision in
         "y")  echo "Please enter IP or FQDN of Server/Machine"
               read -p host
               echo "Pushing Keys. Please provide password when prompted"
-              /usr/bin/ssh-copy-id -i /home/$USER/.ssh/srvkey.pub root@$host
+              /usr/bin/ssh-copy-id -i /home/$USER/.ssh/id_rsa.pub root@$host
               echo "Keys pushed successfully, testing connection. Hostname in output below means connection is fiine"
-              for srv in $host; do echo $host:; ssh -i /home/$USER/.ssh/srvkey root@$srv hostname; done
+              for srv in $host; do echo $host:; ssh -i /home/$USER/.ssh/id_rsa root@$srv hostname; done
               echo "Action completed, exiting. "
               exit 1;;
         "n")  exit 1;;
@@ -34,14 +33,14 @@ case $1 in
       esac ;;
 
   "push")
-    if [ -f /home/$USER/.ssh/srvkey ];
+    if [ -f /home/$USER/.ssh/id_rsa ];
       then
           echo "Please enter IP or FQDN of Server/Machine"
           read -p host
           echo "Pushing Keys. Please provide password when prompted"
-          /usr/bin/ssh-copy-id -i /home/$USER/.ssh/srvkey.pub root@$host
+          /usr/bin/ssh-copy-id -i /home/$USER/.ssh/id_rsa.pub root@$host
           echo "Keys pushed successfully, testing connection."
-          for srv in $host; do echo $host:; ssh -i /home/$USER/.ssh/srvkey root@$srv hostname; done
+          for srv in $host; do echo $host:; ssh -i /home/$USER/.ssh/id_rsa root@$srv hostname; done
           echo "Action completed, exiting. "
           exit 1
         else
@@ -49,11 +48,11 @@ case $1 in
     fi
     exit 1;;
   "connect")
-      /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$2
+      /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$2
       exit 1;;
   "install")
       echo "Checking if SSH Keys are installed. "
-        if [ -f /home/$USER/.ssh/srvkey ];
+        if [ -f /home/$USER/.ssh/id_rsa ];
           then
             echo "If you have a DNS Zone, script will use subdomains for your DNS Zone, for example dns.homenet2.pl, git.homenet2.pl"
             echo "Do you want to use only a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty"
@@ -63,7 +62,7 @@ case $1 in
               echo "Enter IP Address of target Server"
               read -p srvip
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$srvip" >> /home/$user/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$srvip" >> /home/$user/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
               sudo mv /home/$user/ss /usr/bin
               sudo chmod +x /usr/bin/ss
@@ -73,7 +72,7 @@ case $1 in
               echo "Example: if your subdomain is cloud.homenet2.pl, enter cloud. "
               read -p subfqdn
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/srvkey root@$subfqdn.$zone" >> /home/$user/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$subfqdn.$zone" >> /home/$user/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
               sudo mv /home/$user/ss /usr/bin
               sudo chmod +x /usr/bin/ss
