@@ -8,7 +8,7 @@
 ## ss connect {target} --> connect using SSH Keys
 ## ss install --> install script to /usr/bin to allow you to connect without ./ or pointing location.
 
-## To add domain
+## To add domain.
 
 #user = `whoami`
 echo "This script is run as $USER"
