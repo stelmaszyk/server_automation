@@ -66,8 +66,6 @@ case $1 in
               sudo chmod +x /usr/bin/ss
               echo "Script installed."
             else #if DNS Zone provided
-              echo "Enter FQDN without domain"
-              read -p  "Example: if your subdomain is cloud.homenet2.pl, enter cloud:  " subfqdn
               echo " #!/bin/bash
               /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@'$1.$zone" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
