@@ -60,7 +60,7 @@ case $1 in
               read -p  "Enter IP Address of target Server" srvip
 
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$srvip" >> /home/$USER/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@'$1'" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
               sudo mv /home/$USER/ss /usr/bin
               sudo chmod +x /usr/bin/ss
@@ -69,7 +69,7 @@ case $1 in
               echo "Enter FQDN without domain"
               read -p  "Example: if your subdomain is cloud.homenet2.pl, enter cloud:  " subfqdn
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$subfqdn.$zone" >> /home/$USER/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@'$1.$zone" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
               sudo mv /home/$USER/ss /usr/bin
               sudo chmod +x /usr/bin/ss
