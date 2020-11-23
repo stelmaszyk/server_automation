@@ -17,10 +17,9 @@ case $1 in
   "generate")
       echo "Generating SSH Keys. Please answer for few questions, DO NOT CHANGE the SSH Keys location"
       /usr/bin/ssh-keygen -t rsa
-      read -p "Keys have been generated, do you want to push them to the first server? (y/n)" pushdecision
+      read -p "Keys have been generated, do you want to push them to the first server? (y/n):   " pushdecision
       case $pushdecision in
-        "y")  echo "Please enter IP or FQDN of Server/Machine"
-              read -p host
+        "y")  read -p  "Please enter IP or FQDN of Server/Machine" host
               echo "Pushing Keys. Please provide password when prompted"
               /usr/bin/ssh-copy-id -i /home/$USER/.ssh/id_rsa.pub root@$host
               echo "Keys pushed successfully, testing connection. Hostname in output below means connection is fiine"
@@ -55,26 +54,25 @@ case $1 in
         if [ -f /home/$USER/.ssh/id_rsa ];
           then
             echo "If you have a DNS Zone, script will use subdomains for your DNS Zone, for example dns.homenet2.pl, git.homenet2.pl"
-            echo "Do you want to use only a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty"
-            read -p zone
-            if [ -z "$zone"]; then #if zone is empty - no dns
+            read -p "Do you want to use only a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty:  " zone
+       
+            if [ -z "$zone" ]; then #if zone is empty - no dns
               ###Create script
-              echo "Enter IP Address of target Server"
-              read -p srvip
+              read -p  "Enter IP Address of target Server" srvip
+              
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$srvip" >> /home/$user/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$srvip" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
-              sudo mv /home/$user/ss /usr/bin
+              sudo mv /home/$USER/ss /usr/bin
               sudo chmod +x /usr/bin/ss
               echo "Script installed."
             else #if DNS Zone provided
               echo "Enter FQDN without domain"
-              echo "Example: if your subdomain is cloud.homenet2.pl, enter cloud. "
-              read -p subfqdn
+              read -p  "Example: if your subdomain is cloud.homenet2.pl, enter cloud:  " subfqdn
               echo " #!/bin/bash
-              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$subfqdn.$zone" >> /home/$user/ss
+              /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$subfqdn.$zone" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
-              sudo mv /home/$user/ss /usr/bin
+              sudo mv /home/$USER/ss /usr/bin
               sudo chmod +x /usr/bin/ss
               echo "Script installed."
             fi
