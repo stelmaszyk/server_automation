@@ -34,8 +34,7 @@ case $1 in
   "push")
     if [ -f /home/$USER/.ssh/id_rsa ];
       then
-          echo "Please enter IP or FQDN of Server/Machine"
-          read -p host
+          read -p "Please enter IP or FQDN of Server/Machine" host
           echo "Pushing Keys. Please provide password when prompted"
           /usr/bin/ssh-copy-id -i /home/$USER/.ssh/id_rsa.pub root@$host
           echo "Keys pushed successfully, testing connection."
@@ -55,11 +54,11 @@ case $1 in
           then
             echo "If you have a DNS Zone, script will use subdomains for your DNS Zone, for example dns.homenet2.pl, git.homenet2.pl"
             read -p "Do you want to use only a DNS Zone in your network? If yes, write it down, for example homenet2.pl. Otherwise, leave it empty:  " zone
-       
+
             if [ -z "$zone" ]; then #if zone is empty - no dns
               ###Create script
               read -p  "Enter IP Address of target Server" srvip
-              
+
               echo " #!/bin/bash
               /usr/bin/ssh -i /home/$USER/.ssh/id_rsa root@$srvip" >> /home/$USER/ss
               echo "Now you will be asked for root privileged (if not root). This is required to copy script to /usr/bin"
